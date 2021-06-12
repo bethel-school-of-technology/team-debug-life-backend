@@ -12,7 +12,7 @@
 
 ### How to use
 
-To start the server, execute ~~order 66~~ `run.sh` within `Java/target`.
+To start the server, execute ~~order 66~~ `run.sh`.
 
 To close the server, just exit the terminal or hit `CTRL+C` when the terminal is in focus.
 
