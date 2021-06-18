@@ -1,7 +1,16 @@
 package com.debuglife.auth;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,5 +24,35 @@ public class UserController {
   public ResponseEntity<User> register(@RequestBody User newUser) {
     userService.Save(newUser);
     return ResponseEntity.ok(newUser);
+  }
+  
+  // <Authentication> is automatically resolved by the Spring framework
+  // Alternatively, you can ping the SecurityContextHolder to get the current Authentication object as done below
+  // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+  
+  @GetMapping("/api/checktoken")
+  public ResponseEntity<Boolean> checkToken(Authentication auth) {
+	 if (auth != null && !(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
+		 System.out.println(auth.getName());
+		 return ResponseEntity.ok(true);
+	 } else {
+		 return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+	 }
+  }
+  
+  @GetMapping("/api/getuser")
+  public ResponseEntity<String> getUser(Authentication auth) {
+	 if (auth != null && !(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
+		 System.out.println(auth.getName());
+		 return ResponseEntity.ok(auth.getName());
+	 } else {
+		 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+	 }
+  }
+  
+  private boolean isAuthorized(Authentication auth, String authorId) {
+	  String username = auth.getName();
+	  String userId = userService.getUserIdByUsername(username).toString();
+	  return userId.equals(authorId);
   }
 }
