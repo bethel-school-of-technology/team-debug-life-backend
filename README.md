@@ -12,7 +12,9 @@
 
 ### How to use
 
-To start the server, execute ~~order 66~~ `run.sh`.
+To start the server, in VS Code, search 'Spring' in extensions. Download the first 5 listed: Spring Boot, Spring Initializr, Spring Dashboard, Spring Extension Pack, Java Extension Pack.
+
+Then, after they have been installed, select the application `JavaApplcation.java` script under `Java\src\main\java\com\debuglife`. If a pop-up appears asking you to import the files, hit Yes. Lastly, select the play button in the upper-right corner of VS Code. Hit `Run Java` in the dropdown.
 
 To close the server, just exit the terminal or hit `CTRL+C` when the terminal is in focus.
 

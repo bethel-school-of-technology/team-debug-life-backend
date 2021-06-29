@@ -1,5 +1,7 @@
 package com.debuglife.auth;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
@@ -21,9 +23,15 @@ public class UserController {
   private MySQLUserDetailsService userService;
 
   @PostMapping("/register")
-  public ResponseEntity<User> register(@RequestBody User newUser) {
-    userService.Save(newUser);
-    return ResponseEntity.ok(newUser);
+  public ResponseEntity<Object> register(@RequestBody User newUser) {
+    try {
+      userService.Save(newUser);
+      System.out.println("CREATED USER: " + newUser.getUsername());
+    } catch (Exception e) {
+      System.out.println("ERROR CREATING USER: " + newUser.getUsername());
+      return new ResponseEntity<Object>("Username taken", HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<Object>("User created with id: " + newUser.getId(), HttpStatus.OK);
   }
   
   // <Authentication> is automatically resolved by the Spring framework
