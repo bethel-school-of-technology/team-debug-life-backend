@@ -9,6 +9,18 @@
 - `/Register` Returns OK & User object if the request is approved
   - Method: **POST**
   - Data: **{ "username", "password" }**
+- `/api/checktoken` Returns `true` or `false`
+  - Method: **GET**
+  - Headers: **{ "Authorization", "Bearer ..." }**
+- `/api/getuser` Returns username of user with this token
+  - Method: **GET**
+  - Headers: **{ "Authorization", "Bearer ..." }**
+- `/api/getinventory` Returns `{"inventory": [...]}`
+  - Method: **GET**
+  - Headers: **{ "Authorization", "Bearer ..." }**
+- `/api/getroom` Returns {"room": # or `null`}
+  - Method: **GET**
+  - Headers: **{ "Authorization", "Bearer ..." }**
 
 ### How to use
 

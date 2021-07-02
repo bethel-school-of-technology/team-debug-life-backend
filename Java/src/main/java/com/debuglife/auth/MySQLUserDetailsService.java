@@ -17,6 +17,14 @@ public class MySQLUserDetailsService implements UserDetailsService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
+  public User loadUserById(Long id) {
+    User user = userRepository.findById(id).get();
+    if (user == null) {
+      throw new UsernameNotFoundException(String.format("User with id: %d", id));
+    }
+    return user;
+  }
+
   @Override
   public UserDetails loadUserByUsername(String username) {
     User user = userRepository.findByUsername(username);

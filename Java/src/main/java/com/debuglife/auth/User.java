@@ -2,32 +2,50 @@ package com.debuglife.auth;
 
 import javax.persistence.*;
 
+import org.json.simple.JSONObject;
+
 @Entity
 public class User {
-	  @Id
-	  @GeneratedValue(strategy = GenerationType.AUTO)
-	  private Long id;
-	  
-	  @Column(nullable = false, unique = true)
-	  private String username;
-	  private String password;
-	  
-	  public Long getId() {
-	    return id;
-	  }
-	  public void setId(Long id) {
-	    this.id = id;
-	  }
-	  public String getUsername() {
-	    return username;
-	  }
-	  public void setUsername(String username) {
-	    this.username = username;
-	  }
-	  public String getPassword() {
-	    return password;
-	  }
-	  public void setPassword(String password) {
-	    this.password = password;
-	  }
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@Column(nullable = false, unique = true)
+	private String username;
+	private String password;
+
+	private Long currentRoom;
+	private JSONObject inventory;
+	
+	public Long getId() {
+	return id;
+	}
+	public void setId(Long id) {
+	this.id = id;
+	}
+	public String getUsername() {
+	return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public Long getCurrentRoom() {
+		return currentRoom;
+	}
+	public void setCurrentRoom(Long room) {
+		this.currentRoom = room;
+	}
+	public JSONObject getInventory() {
+		return inventory;
+	}
+	public void setInventory(JSONObject inventory) {
+		this.inventory = inventory;
+	}
+
 }

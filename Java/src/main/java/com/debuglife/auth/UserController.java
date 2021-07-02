@@ -54,7 +54,31 @@ public class UserController {
 		 System.out.println(auth.getName());
 		 return ResponseEntity.ok(auth.getName());
 	 } else {
-		 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		 return new ResponseEntity<String>("", HttpStatus.NOT_FOUND);
+	 }
+  }
+
+  @GetMapping("/api/getinventory")
+  public ResponseEntity<JSONObject> getInventory(Authentication auth) {
+	 if (auth != null && !(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
+		 System.out.println(auth.getName());
+     User user = userService.loadUserById( userService.getUserIdByUsername(auth.getName()));
+		 return ResponseEntity.ok( user.getInventory() );
+	 } else {
+		 return new ResponseEntity<JSONObject>(new JSONObject(), HttpStatus.NOT_FOUND);
+	 }
+  }
+
+  @GetMapping("/api/getroom")
+  public ResponseEntity<JSONObject> getRoom(Authentication auth) {
+    JSONObject container = new JSONObject();
+	 if (auth != null && !(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
+		 System.out.println(auth.getName());
+     User user = userService.loadUserById( userService.getUserIdByUsername(auth.getName()));
+     container.put("room", user.getCurrentRoom());
+		 return ResponseEntity.ok(container);
+	 } else {
+		 return new ResponseEntity<JSONObject>(container, HttpStatus.NOT_FOUND);
 	 }
   }
   
