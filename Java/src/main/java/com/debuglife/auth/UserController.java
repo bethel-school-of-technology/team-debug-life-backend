@@ -81,6 +81,32 @@ public class UserController {
 		 return new ResponseEntity<JSONObject>(container, HttpStatus.NOT_FOUND);
 	 }
   }
+
+  @PostMapping("/api/setroom")
+  public ResponseEntity<Boolean> setInventory(Authentication auth, @RequestBody Long room) {
+	 if (auth != null && !(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
+		 System.out.println(auth.getName());
+     User user = userService.loadUserById( userService.getUserIdByUsername(auth.getName()));
+     user.setCurrentRoom(room);
+     userService.Save(user);
+		 return ResponseEntity.ok(true);
+	 } else {
+		 return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+	 }
+  }
+
+  @PostMapping("/api/setinventory")
+  public ResponseEntity<Boolean> setInventory(Authentication auth, @RequestBody JSONObject inventory) {
+	 if (auth != null && !(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
+		 System.out.println(auth.getName());
+     User user = userService.loadUserById( userService.getUserIdByUsername(auth.getName()));
+     user.setInventory(inventory);
+     userService.Save(user);
+		 return ResponseEntity.ok(true);
+	 } else {
+		 return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+	 }
+  }
   
   private boolean isAuthorized(Authentication auth, String authorId) {
 	  String username = auth.getName();
